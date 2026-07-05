@@ -115,6 +115,38 @@ offline_access
 }
 ```
 
+## 🧪 Angular + .NET Sample Project
+
+This repository includes a working sample under the `/Samples` directory:
+
+- ASP.NET Core BFF Server → `Samples/Bff.Server`
+- Angular Client → `Samples/Angular.Client`
+
+---
+
+### 🧠 What this sample demonstrates
+
+- ASP.NET Core BFF backend with `AddBffAuthentication()`
+- OpenID Connect authentication (Keycloak / Identity Provider)
+- Cookie-based session authentication (no token storage in frontend)
+- Angular application consuming secure BFF APIs
+- `/login`, `/logout`, and protected API endpoints
+- End-to-end authentication flow using BFF architecture
+
+---
+
+### 🏗 Architecture
+
+```text
+Angular SPA
+     ↓
+ASP.NET Core BFF
+     ↓
+Cookie Authentication (Session)
+     ↓
+OpenID Connect Provider
+```
+
 
 ## 📖 Deep Dive (Architecture & Security Model)
 
