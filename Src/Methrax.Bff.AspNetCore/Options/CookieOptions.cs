@@ -10,7 +10,7 @@ public sealed class CookieOptions
     /// <summary>
     /// Cookie SameSite policy.
     /// </summary>
-    public SameSiteMode SameSite { get; set; } = SameSiteMode.Lax;
+    public SameSiteMode SameSite { get; set; } = SameSiteMode.Strict;
 
     /// <summary>
     /// Cookie secure policy.

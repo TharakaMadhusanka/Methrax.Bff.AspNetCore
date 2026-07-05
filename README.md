@@ -73,6 +73,37 @@ offline_access
 | LogoutPath       | string | ❌        | `/logout`        | Endpoint used to sign out user |
 | AccessDeniedPath | string | ❌        | `/access-denied` | Redirect path for access denied |
 
+### Example Configurations
+
+```
+{
+  "BffAuthentication": {
+    "Authority": "<Authority_URL>",
+    "ClientId": "<Client_ID>",
+    "ClientSecret": "<Client_Secret>",
+    "RequireHttpsMetadata": true,
+
+    "Scopes": [
+      "openid",
+      "profile",
+      "offline_access"
+    ],
+
+    "Cookie": {
+      "SameSite": "None",
+      "SecurePolicy": "Always",
+      "HttpOnly": true
+    },
+
+    "Endpoints": {
+      "LoginPath": "/login",
+      "LogoutPath": "/logout",
+      "AccessDeniedPath": "/access-denied"
+    }
+  }
+}
+```
+
 ## 📖 Deep Dive (Architecture & Security Model)
 
 This library is based on a detailed exploration of modern authentication evolution and BFF architecture.
