@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Methrax.Bff.AspNetCore</Title>
+  <PackageTags>bff;backend-for-frontend;authentication;openidconnect;oauth2;aspnetcore;security</PackageTags>
+    <Company>METHRAX</Company>
+	  <Authors>Tharaka Madhusanka</Authors>
+    <PackageProjectUrl>https://github.com/TharakaMadhusanka/Methrax.Bff.AspNetCore</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/TharakaMadhusanka/Methrax.Bff.AspNetCore</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+	  <Description>
+    A lightweight Backend-for-Frontend (BFF) authentication library for ASP.NET Core
+    built on Cookie Authentication and OpenID Connect (OIDC).
+    It simplifies secure authentication setup for modern SPA applications by enforcing
+    server-side session management and eliminating token storage in the frontend.
+  </Description>
+   <Copyright>Copyright (c) 2026 Tharaka Madhusanka - Methrax. Open Source under MIT License.</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="10.0.9" />
+  </ItemGroup>
+  
+  <PropertyGroup>
+  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+</PropertyGroup>
+
+</Project>
