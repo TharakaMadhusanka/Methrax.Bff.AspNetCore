@@ -19,7 +19,7 @@
     server-side session management and eliminating token storage in the frontend.
   </Description>
     <PackageReleaseNotes>
-    Initial preview release of Methrax.Bff.AspNetCore.
+    V1.0.0 release of Methrax.Bff.AspNetCore.
 
     Features:
     - Cookie-based authentication setup
