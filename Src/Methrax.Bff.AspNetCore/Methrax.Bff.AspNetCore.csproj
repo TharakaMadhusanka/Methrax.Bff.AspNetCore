@@ -18,6 +18,26 @@
     It simplifies secure authentication setup for modern SPA applications by enforcing
     server-side session management and eliminating token storage in the frontend.
   </Description>
+    <PackageReleaseNotes>
+    Initial preview release of Methrax.Bff.AspNetCore.
+
+    Features:
+    - Cookie-based authentication setup
+    - OpenID Connect (OIDC) integration
+    - BFF-style secure authentication flow
+    - Centralized configuration via appsettings.json
+    - Secure defaults for ASP.NET Core SPA authentication
+    - Minimal setup via AddBffAuthentication()
+
+    Security:
+    - No token exposure to frontend
+    - Cookie-based session authentication
+    - Secure cookie configuration support
+
+    Notes:
+    - Designed for ASP.NET Core + SPA architectures (Angular, React, etc.)
+    - Compatible with modern OpenID Connect providers (Keycloak, Auth0, Entra ID)
+  </PackageReleaseNotes>
    <Copyright>Copyright (c) 2026 Tharaka Madhusanka - Methrax. Open Source under MIT License.</Copyright>
   </PropertyGroup>
 
