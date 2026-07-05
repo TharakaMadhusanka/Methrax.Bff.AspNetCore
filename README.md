@@ -24,6 +24,17 @@ It provides a simple and opinionated way to implement secure BFF-style authentic
 dotnet add package Methrax.Bff.AspNetCore
 
 ```
+
+## 🧩 Enable BFF Middleware
+
+To enable Backend-for-Frontend (BFF) authentication in your application, register the BFF authentication services in `Program.cs`.
+
+This sets up cookie authentication and OpenID Connect handling required for secure BFF flows.
+
+```csharp
+// Add BFF Middleware to handle authentication and authorization flows in a BFF architecture.
+builder.Services.AddBffAuthentication();
+```
 ---
 ## ⚙️ Configuration Reference
 
@@ -103,6 +114,7 @@ offline_access
   }
 }
 ```
+
 
 ## 📖 Deep Dive (Architecture & Security Model)
 

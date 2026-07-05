@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <Version>1.0.1</Version>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -19,7 +20,7 @@
     server-side session management and eliminating token storage in the frontend.
   </Description>
     <PackageReleaseNotes>
-    V1.0.0 release of Methrax.Bff.AspNetCore.
+    V1.0.1 release of Methrax.Bff.AspNetCore.
 
     Features:
     - Cookie-based authentication setup
