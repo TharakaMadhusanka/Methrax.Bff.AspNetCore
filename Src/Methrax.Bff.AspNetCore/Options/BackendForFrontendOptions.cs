@@ -29,7 +29,20 @@ public sealed class BackendForFrontendAuthenticationOptions
     /// Indicates whether HTTPS metadata is required.
     /// </summary>
     public bool RequireHttpsMetadata { get; set; } = true;
+    /// <summary>
+    /// Indicates whether OpenID Connect tokens (e.g., access token, refresh token, and ID token)
+    /// should be persisted in the authentication ticket.
+    ///
+    /// Defaults to <c>false</c> to prevent unnecessary token storage. When enabled, tokens can be
+    /// accessed via <c>HttpContext.GetTokenAsync()</c>.
+    /// </summary>
+    public bool SaveTokens { get; set; } = false;
 
+    /// <summary>
+    /// Enables server-side session management using an <see cref="ITicketStore"/> implementation.
+    /// Defaults to <c>false</c>.
+    /// </summary>
+    public bool EnableServerSideSessions { get; set; } = false;
     /// <summary>
     /// Cookie settings.
     /// </summary>

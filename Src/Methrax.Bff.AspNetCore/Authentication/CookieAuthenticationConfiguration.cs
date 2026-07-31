@@ -13,7 +13,7 @@ internal static class CookieAuthenticationConfiguration
     {
         services
         .AddOptions<CookieAuthenticationOptions>(AuthenticationDefaults.CookieScheme)
-        .Configure<IOptions<BackendForFrontendAuthenticationOptions>>((cookie, cfg) =>
+        .Configure<IOptions<BackendForFrontendAuthenticationOptions>, ITicketStore>((cookie, cfg, store) =>
         {
             var options = cfg.Value;
 
@@ -24,6 +24,11 @@ internal static class CookieAuthenticationConfiguration
             cookie.Cookie.HttpOnly = options.Cookie.HttpOnly;
             cookie.Cookie.SameSite = options.Cookie.SameSite;
             cookie.Cookie.SecurePolicy = options.Cookie.SecurePolicy;
+
+            if (options.EnableServerSideSessions)
+            {
+                cookie.SessionStore = store;
+            }
 
             cookie.Events.OnRedirectToLogin = context =>
             {
