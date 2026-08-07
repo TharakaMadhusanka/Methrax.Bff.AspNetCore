@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Methrax.Bff.AspNetCore.Authentication;
@@ -11,10 +12,14 @@ internal static class CookieAuthenticationConfiguration
     internal static IServiceCollection ConfigureCookieAuthentication(
         this IServiceCollection services)
     {
+        // Required for the cookie authentication scheme to work properly with server-side sessions.
         services
         .AddOptions<CookieAuthenticationOptions>(AuthenticationDefaults.CookieScheme)
-        .Configure<IOptions<BackendForFrontendAuthenticationOptions>, ITicketStore>((cookie, cfg, store) =>
+        .Configure<IOptions<BackendForFrontendAuthenticationOptions>, ILoggerFactory>((cookie, cfg, loggerFactory) =>
         {
+            var logger = loggerFactory.CreateLogger("Methrax.Bff.AspNetCore");
+            logger.LogInformation("Configuring cookie authentication options for scheme: {Scheme}", AuthenticationDefaults.CookieScheme);
+
             var options = cfg.Value;
 
             cookie.LoginPath = options.Endpoints.LoginPath;
@@ -25,13 +30,9 @@ internal static class CookieAuthenticationConfiguration
             cookie.Cookie.SameSite = options.Cookie.SameSite;
             cookie.Cookie.SecurePolicy = options.Cookie.SecurePolicy;
 
-            if (options.EnableServerSideSessions)
-            {
-                cookie.SessionStore = store;
-            }
-
             cookie.Events.OnRedirectToLogin = context =>
             {
+                // Restrict login for /api endpoints to return 401 Unauthorized instead of redirecting to the login page.
                 if (context.Request.Path.StartsWithSegments("/api"))
                 {
                     context.Response.StatusCode = StatusCodes.Status401Unauthorized;
@@ -42,6 +43,37 @@ internal static class CookieAuthenticationConfiguration
                 return Task.CompletedTask;
             };
         });
+
+        // Optionally configure the cookie authentication options to use a server-side session store if enabled in the BFF options.
+        services.AddOptions<CookieAuthenticationOptions>(AuthenticationDefaults.CookieScheme)
+            .PostConfigure<IOptions<BackendForFrontendAuthenticationOptions>, IEnumerable<ITicketStore>, ILoggerFactory>(
+                (cookie, bffOptionsMonitor, ticketStores, loggerFactory) =>
+                {
+                    var options = bffOptionsMonitor.Value;
+
+                    if (options.EnableServerSideSessions)
+                    {
+                        var ticketStore = ticketStores.FirstOrDefault();
+
+                        if (ticketStore is null)
+                        {
+                            var logger = loggerFactory.CreateLogger("Methrax.Bff.AspNetCore");
+
+                            logger.LogError(
+                                "Failed to configure cookie scheme '{Scheme}'. Server-side sessions are enabled ('EnableServerSideSessions = true'), " +
+                                "but no implementation of 'ITicketStore' was registered in DI.",
+                                AuthenticationDefaults.CookieScheme);
+
+                            throw new InvalidOperationException(
+                                "Server-side sessions are enabled ('EnableServerSideSessions = true'), " +
+                                "but no implementation of 'ITicketStore' was registered in the dependency injection container. " +
+                                "Please register an ITicketStore implementation (e.g., MemoryCacheTicketStore or RedisTicketStore) " +
+                                "or set EnableServerSideSessions to false.");
+                        }
+
+                        cookie.SessionStore = ticketStore;
+                    }
+                });
 
         return services;
     }

@@ -1,59 +1,67 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <Version>1.0.2</Version>
-    <TargetFramework>net10.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>Methrax.Bff.AspNetCore</Title>
-  <PackageTags>bff;backend-for-frontend;authentication;openidconnect;oauth2;aspnetcore;security</PackageTags>
-    <Company>METHRAX</Company>
-	  <Authors>Tharaka Madhusanka</Authors>
-    <PackageProjectUrl>https://github.com/TharakaMadhusanka/Methrax.Bff.AspNetCore</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/TharakaMadhusanka/Methrax.Bff.AspNetCore</RepositoryUrl>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-	  <Description>
-    A lightweight Backend-for-Frontend (BFF) authentication library for ASP.NET Core
-    built on Cookie Authentication and OpenID Connect (OIDC).
-    It simplifies secure authentication setup for modern SPA applications by enforcing
-    server-side session management and eliminating token storage in the frontend.
-  </Description>
-	  <Version>1.1.0</Version>
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
 
-	  <PackageReleaseNotes>
-		Added support for server-side session management and token persistence.
+		<!-- Package Version & Metadata -->
+		<Version>1.1.0</Version>
+		<Title>Methrax.Bff.AspNetCore</Title>
+		<Authors>Tharaka Madhusanka</Authors>
+		<Company>METHRAX</Company>
+		<Copyright>Copyright (c) 2026 Tharaka Madhusanka - Methrax. Open Source under MIT License.</Copyright>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 
-		Features:
-		- Added SaveTokens configuration support
-		- Added EnableServerSideSessions configuration support
-		- Added ITicketStore integration support
-		- Improved support for production BFF architectures
+		<!-- Package Descriptions & Links -->
+		<Description>A lightweight Backend-for-Frontend (BFF) authentication library for ASP.NET Core built on Cookie Authentication and OpenID Connect (OIDC). It simplifies secure authentication setup for modern SPA applications by enforcing server-side session management and eliminating token storage in the frontend.</Description>
+		<PackageTags>bff;backend-for-frontend;authentication;openidconnect;oauth2;aspnetcore;security</PackageTags>
+		<PackageProjectUrl>https://github.com/TharakaMadhusanka/Methrax.Bff.AspNetCore</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/TharakaMadhusanka/Methrax.Bff.AspNetCore</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 
-		Notes:
-		- Existing applications require no changes.
-		- All new features are opt-in and disabled by default.
-	  </PackageReleaseNotes>
-   <Copyright>Copyright (c) 2026 Tharaka Madhusanka - Methrax. Open Source under MIT License.</Copyright>
-  </PropertyGroup>
+		<!-- Build & NuGet Packing Settings -->
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
-  <ItemGroup>
-    <None Include="..\..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
+		<!-- Release Notes -->
+		<PackageReleaseNotes>
+			Added support for server-side session management, token persistence, and options validation.
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="10.0.9" />
-  </ItemGroup>
-  
-  <PropertyGroup>
-  <PackageLicenseExpression>MIT</PackageLicenseExpression>
-</PropertyGroup>
+			Features:
+			- Added SaveTokens configuration support
+			- Added EnableServerSideSessions configuration support
+			- Added ITicketStore integration support
+			- Added eager options validation at application startup (BackendForFrontendOptionsValidator)
+			- Improved support for production BFF architectures
+
+			Breaking Changes:
+			- Configuration section name changed from "BffAuthentication" to "Methrax:BffAuthentication". Existing appsettings.json files must be updated accordingly.
+
+			Notes:
+			- All new runtime features are opt-in and disabled by default.
+		</PackageReleaseNotes>
+	</PropertyGroup>
+
+	<!-- Include README file in the package -->
+	<ItemGroup>
+		<None Include="..\..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<!-- Framework & Package References -->
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="10.0.9" />
+	</ItemGroup>
 
 </Project>
