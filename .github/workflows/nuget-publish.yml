@@ -35,7 +35,7 @@ jobs:
 
       - name: Pack NuGet Package
         run: >
-          dotnet pack 
+          dotnet pack src/Methrax.Bff.AspNetCore/Methrax.Bff.AspNetCore.csproj
           --configuration Release 
           --no-build 
           --output ./artifacts
