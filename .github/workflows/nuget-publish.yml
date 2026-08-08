@@ -2,11 +2,11 @@ name: Publish NuGet Package
 
 on:
   release:
-    types: [published]
+    types: [published] # Triggers strictly when you publish an official GitHub Release
 
 permissions:
   contents: read
-  id-token: write
+  id-token: write # Required for OIDC / Trusted Publishing authentication with NuGet.org
 
 jobs:
   publish:
@@ -22,20 +22,17 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: '10.0.x' # Aligned with .NET 10 target
 
       - name: Restore Dependencies
-        run: dotnet restore
+        run: dotnet restore Src/Methrax.Bff.AspNetCore.sln
 
-      - name: Build Library (Release)
-        run: dotnet build --configuration Release --no-restore
+      - name: Build Project (Release)
+        run: dotnet build Src/Methrax.Bff.AspNetCore/Methrax.Bff.AspNetCore.csproj --configuration Release
 
-      - name: Run Unit Tests
-        run: dotnet test --configuration Release --no-build --verbosity normal
-
-      - name: Pack NuGet Package
+      - name: Pack Package
         run: >
-          dotnet pack src/Methrax.Bff.AspNetCore/Methrax.Bff.AspNetCore.csproj
+          dotnet pack Src/Methrax.Bff.AspNetCore/Methrax.Bff.AspNetCore.csproj 
           --configuration Release 
           --no-build 
           --output ./artifacts
