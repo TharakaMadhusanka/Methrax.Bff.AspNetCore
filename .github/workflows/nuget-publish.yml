@@ -1,9 +1,8 @@
 name: Publish NuGet Package
 
 on:
-  push:
-    branches:
-      - 'releases/*'
+  release:
+    types: [published] 
 
 jobs:
   publish:
@@ -19,7 +18,8 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: '10.0.x' 
+
       - name: Restore Dependencies
         run: dotnet restore
 
