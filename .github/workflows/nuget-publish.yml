@@ -2,11 +2,11 @@ name: Publish NuGet Package
 
 on:
   release:
-    types: [published] # Triggers strictly when you publish an official GitHub Release
+    types: [published] 
 
 permissions:
   contents: read
-  id-token: write # Required for OIDC / Trusted Publishing authentication with NuGet.org
+  id-token: write
 
 jobs:
   publish:
@@ -22,10 +22,10 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '10.0.x' # Aligned with .NET 10 target
+          dotnet-version: '10.0.x'
 
       - name: Restore Dependencies
-        run: dotnet restore Src/Methrax.Bff.AspNetCore/Methrax.Bff.AspNetCore.slnx
+        run: dotnet restore Src/Methrax.Bff.AspNetCore/Methrax.Bff.AspNetCore.sln
 
       - name: Build Project (Release)
         run: dotnet build Src/Methrax.Bff.AspNetCore/Methrax.Bff.AspNetCore.csproj --configuration Release
@@ -37,8 +37,15 @@ jobs:
           --no-build 
           --output ./artifacts
 
-      - name: Push Package via Trusted Publishing
+      - name: NuGet Login (OIDC)
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}
+          
+      - name: Push Package to NuGet.org
         run: >
           dotnet nuget push ./artifacts/*.nupkg 
+          --api-key ${{ steps.login.outputs.NUGET_API_KEY }} 
           --source https://api.nuget.org/v3/index.json 
           --skip-duplicate
