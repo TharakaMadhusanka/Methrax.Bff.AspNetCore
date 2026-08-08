@@ -1,3 +1,11 @@
+
+[![Publish NuGet Package](https://github.com/TharakaMadhusanka/Methrax.Bff.AspNetCore/actions/workflows/nuget-publish.yml/badge.svg?event=release)](https://github.com/Methrax/Methrax.Bff.AspNetCore/actions/workflows/nuget-publish.yml)
+[![NuGet Version](https://img.shields.io/nuget/v/Methrax.Bff.AspNetCore.svg?style=flat-square&logo=nuget)](https://www.nuget.org/packages/Methrax.Bff.AspNetCore)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/Methrax.Bff.AspNetCore.svg?style=flat-square&logo=nuget)](https://www.nuget.org/packages/Methrax.Bff.AspNetCore)
+[![GitHub Release](https://img.shields.io/github/v/release/TharakaMadhusanka/Methrax.Bff.AspNetCore?style=flat-square&logo=github)](https://github.com/TharakaMadhusanka/Methrax.Bff.AspNetCore/releases/latest)
+[![Framework](https://img.shields.io/badge/Framework-.NET%2010.0-512BD4?style=flat-square&logo=dotnet)](https://dotnet.microsoft.com/)
+[![License](https://img.shields.io/github/license/TharakaMadhusanka/Methrax.Bff.AspNetCore?style=flat-square)](https://github.com/TharakaMadhusanka/Methrax.Bff.AspNetCore/blob/main/LICENSE)
+
 # Methrax.Bff.AspNetCore
 
 A lightweight, opinionated Backend-for-Frontend (BFF) security library for ASP.NET Core that simplifies SPA authentication:
