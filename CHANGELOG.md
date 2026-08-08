@@ -1,4 +1,4 @@
-﻿## [1.1.0] - 2026-07-31
+﻿## [1.1.0] - 2026-08-08
 
 ### Added
 - `SaveTokens` configuration support for managing token persistence in authentication properties.
