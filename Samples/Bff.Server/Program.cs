@@ -28,6 +28,18 @@ builder.Services.AddBffAuthentication(options =>
     options.SaveTokens = true;
 });
 
+// HttpContext accessor and token forwarding handler for delegating token to downstream APIs
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<TokenForwardingHandler>();
+
+// Register a named HttpClient that uses the TokenForwardingHandler to forward the access token
+builder.Services.AddHttpClient("downstream", client =>
+{
+    // Replace with your downstream API base address
+    client.BaseAddress = new Uri(builder.Configuration["DownstreamApi:BaseUrl"] ?? "https://httpbin.org/");
+})
+    .AddHttpMessageHandler<TokenForwardingHandler>();
+
 var app = builder.Build();
 
 // -----------------------------------------------------------------------------
@@ -132,6 +144,15 @@ app.MapGet("/token-info", async (
         IdToken = idToken,
         ExpiresAt = expiresAt
     });
+}).RequireAuthorization();
+
+// Example: Token Forwarding to a downstream API using the named HttpClient "downstream" that includes the access token in the Authorization header.
+app.MapGet("/call-downstream", async (IHttpClientFactory httpClientFactory) =>
+{
+    var client = httpClientFactory.CreateClient("downstream");
+    var resp = await client.GetAsync("get");
+    var content = await resp.Content.ReadAsStringAsync();
+    return Results.Content(content, resp.Content.Headers.ContentType?.ToString() ?? "text/plain");
 }).RequireAuthorization();
 
 app.Run();
